@@ -50,9 +50,9 @@ static bool isIPad();
 @synthesize rotation;
 
 // Adapted from http://blog.coriolis.ch/2009/09/04/arbitrary-rotation-of-a-cgimage/ and https://github.com/JanX2/CreateRotateWriteCGImage
-- (CGImageRef)rotateImage:(CGImageRef)original degrees:(float)degrees {
+- (CGImageRef)rotateImage:(CGImageRef)original degrees:(float)degrees CF_RETURNS_RETAINED{
   if (degrees == 0.0f) {
-    return original;
+    return CGImageRetain(original);
   } else {
     double radians = degrees * M_PI / 180;
 
@@ -555,10 +555,12 @@ ZXAV(didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer)
 
   CGImageRef videoFrameImage = [ZXCGImageLuminanceSource createImageFromBuffer:videoFrame];
   CGImageRef rotatedImage = [self rotateImage:videoFrameImage degrees:rotation];
+           CGImageRelease(videoFrameImage);
 
   ZXCGImageLuminanceSource *source
     = [[ZXCGImageLuminanceSource alloc]
         initWithCGImage:rotatedImage];
+           CGImageRelease(rotatedImage);
 
   if (luminance) {
     CGImageRef image = source.image;

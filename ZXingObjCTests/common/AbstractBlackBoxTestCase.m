@@ -360,8 +360,7 @@
   CGImageRef rotatedImage = CGBitmapContextCreateImage(context);
 
   CFRelease(context);
-
-  return [[[ZXImage alloc] initWithCGImageRef:rotatedImage];
+  return [[ZXImage alloc] initWithCGImageRef:rotatedImage];
 }
 
 @end
