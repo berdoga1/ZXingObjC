@@ -1,3 +1,15 @@
+My notes:
+----
+
+Before to close the Scanner you must call those functions on the viewWillDisappear
+```objc
+[self.capture.layer removeFromSuperlayer];
+[self.capture stop];
+```
+
+Original Readme:
+----
+
 ZXingObjC
 =========
 
