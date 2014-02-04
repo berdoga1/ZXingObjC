@@ -77,6 +77,7 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
   }
   int blackPoint = [self estimateBlackPoint:localBuckets];
   if (blackPoint == -1) {
+      free(localLuminances);
     if (error) *error = NotFoundErrorInstance();
     return nil;
   }
@@ -92,6 +93,7 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
     left = center;
     center = right;
   }
+    free(localLuminances);
 
   return row;
 }
@@ -113,6 +115,7 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
       [localBuckets replaceObjectAtIndex:pixel >> LUMINANCE_SHIFT
                               withObject:[NSNumber numberWithInt:[[localBuckets objectAtIndex:pixel >> LUMINANCE_SHIFT] intValue] + 1]];
     }
+    free(localLuminances);
   }
   int blackPoint = [self estimateBlackPoint:localBuckets];
   if (blackPoint == -1) {
